@@ -1,0 +1,551 @@
+{
+  "users": [
+    {
+      "_id": "usr_1789803719763_dtey8nk",
+      "id": "usr_1789803719763_dtey8nk",
+      "name": "Alex Rivera (B.Tech Scholar)",
+      "email": "student.auditor@webshield.edu",
+      "passwordHash": "$2b$10$ldmZjxtIJ077SUklISuLaek9P67j4tJpB8yDWKAdb74CqYqeVfG1K",
+      "role": "security_lead",
+      "createdAt": "2026-09-19T07:41:59.763Z"
+    },
+    {
+      "_id": "usr_1789838989257_o1ys976",
+      "id": "usr_1789838989257_o1ys976",
+      "name": "ale",
+      "email": "alekhya@gmail.com",
+      "passwordHash": "$2b$10$fBHYDhsff3tJL3VJoi6ipuVSwe2gnYZUhk4opXn3QVFHleHMGgXfe",
+      "role": "security_auditor",
+      "createdAt": "2026-09-19T17:29:49.257Z"
+    }
+  ],
+  "scans": [
+    {
+      "_id": "scan_1789984241229_711y9gm",
+      "id": "scan_1789984241229_711y9gm",
+      "userId": "usr_1789838989257_o1ys976",
+      "userEmail": "alekhya@gmail.com",
+      "targetUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+      "scanDate": "2026-09-21T09:50:41.223Z",
+      "score": 73,
+      "overallRisk": "MEDIUM",
+      "findings": [
+        {
+          "area": "HTTPS",
+          "status": "PASS",
+          "problem": "HTTPS encryption is active and standard TLS transport security is verified.",
+          "riskLevel": "None",
+          "explanation": "The target website successfully serves content over an encrypted TLS/HTTPS connection, safeguarding sensitive data in transit from eavesdropping.",
+          "recommendedSolution": "Maintain current valid SSL/TLS certificates and renew ahead of expiration.",
+          "technicalDetails": {
+            "url": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+            "isHttps": true,
+            "httpRedirectsToHttps": true,
+            "statusCode": 200
+          }
+        },
+        {
+          "area": "Security Headers",
+          "status": "PASS",
+          "problem": "All essential defense-in-depth HTTP security headers are correctly configured.",
+          "riskLevel": "None",
+          "explanation": "Security headers instruct the client browser how to handle content safely, neutralizing clickjacking, MIME confusion, and cross-site scripting (XSS).",
+          "recommendedSolution": "Regularly review your Content Security Policy (CSP) directives to prevent script injection.",
+          "technicalDetails": {
+            "presentHeaders": [
+              "Strict-Transport-Security",
+              "Content-Security-Policy",
+              "X-Frame-Options",
+              "X-Content-Type-Options",
+              "Referrer-Policy",
+              "Permissions-Policy"
+            ],
+            "missingHeaders": [],
+            "rawHeaders": {
+              "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https://remssssfmrgmyzqnpeas.supabase.co https://*.supabase.co https://owasp.org https://dependencytrack.org https://assets.ot.digital https://images.unsplash.com https://i.ytimg.com https://img.youtube.com data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://remssssfmrgmyzqnpeas.supabase.co wss://remssssfmrgmyzqnpeas.supabase.co; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://calendar.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp-endpoint",
+              "server": "Vercel",
+              "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+              "x-content-type-options": "nosniff",
+              "x-frame-options": "DENY",
+              "x-powered-by": "Next.js"
+            }
+          }
+        },
+        {
+          "area": "Cookie Security",
+          "status": "ISSUE",
+          "problem": "1 cookie(s) missing the 'Secure' attribute.",
+          "riskLevel": "High",
+          "explanation": "Cookies without the Secure flag can be transmitted over unencrypted HTTP connections if a user visits an insecure link, allowing session hijacking.",
+          "recommendedSolution": "Always set the \"Secure\" flag on cookies so browsers only transmit them over HTTPS.",
+          "technicalDetails": {
+            "cookiesFound": 1,
+            "cookieDetails": [
+              {
+                "name": "owasp-locale",
+                "hasSecure": false,
+                "hasHttpOnly": false,
+                "hasSameSite": true
+              }
+            ]
+          }
+        },
+        {
+          "area": "Authentication",
+          "status": "WARNING",
+          "problem": "Server leaks technology stack via X-Powered-By: \"Next.js\"",
+          "riskLevel": "Medium",
+          "explanation": "Information disclosure in HTTP headers provides passive fingerprinting intelligence to automated scanners and attackers.",
+          "recommendedSolution": "Remove or sanitize banner headers in reverse proxy / application settings.",
+          "technicalDetails": {
+            "serverBanner": "Vercel",
+            "poweredBy": "Next.js",
+            "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+            "corsOrigin": "Restricted"
+          }
+        },
+        {
+          "area": "Input Validation",
+          "status": "PASS",
+          "problem": "Input fields and form actions implement standard client-side validation attributes and secure transmission methods.",
+          "riskLevel": "None",
+          "explanation": "No direct HTML input forms were detected on the inspected landing page. URL query parameters are processed cleanly without unescaped reflection.",
+          "recommendedSolution": "Always combine client-side validation with strict server-side schema verification and sanitization.",
+          "technicalDetails": {
+            "formsAnalyzed": 0,
+            "insecureFormAction": false,
+            "passwordOverGet": false,
+            "unconstrainedFormFound": false,
+            "missingCsrfIndicator": false
+          }
+        }
+      ],
+      "weakAreas": [
+        "Cookie Security",
+        "Authentication"
+      ],
+      "summaryText": "WEB SECURITY REPORT\n\nSecurity Score: 73/100\nOverall Risk: MEDIUM\n\nHTTPS              ✅ PASS\nSecurity Headers   ✅ PASS\nCookie Security    ❌ ISSUE\nAuthentication     ⚠️ WARNING\nInput Validation   ✅ PASS\n\nWeak Areas:\n• Cookie Security\n• Authentication",
+      "metadata": {
+        "durationMs": 1134,
+        "statusCode": 200,
+        "contentType": "text/html; charset=utf-8",
+        "finalUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com"
+      }
+    },
+    {
+      "_id": "scan_1789839306491_twt68mh",
+      "id": "scan_1789839306491_twt68mh",
+      "userId": "usr_1789838989257_o1ys976",
+      "userEmail": "alekhya@gmail.com",
+      "targetUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+      "scanDate": "2026-09-19T17:35:06.485Z",
+      "score": 73,
+      "overallRisk": "MEDIUM",
+      "findings": [
+        {
+          "area": "HTTPS",
+          "status": "PASS",
+          "problem": "HTTPS encryption is active and standard TLS transport security is verified.",
+          "riskLevel": "None",
+          "explanation": "The target website successfully serves content over an encrypted TLS/HTTPS connection, safeguarding sensitive data in transit from eavesdropping.",
+          "recommendedSolution": "Maintain current valid SSL/TLS certificates and renew ahead of expiration.",
+          "technicalDetails": {
+            "url": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+            "isHttps": true,
+            "httpRedirectsToHttps": true,
+            "statusCode": 200
+          }
+        },
+        {
+          "area": "Security Headers",
+          "status": "PASS",
+          "problem": "All essential defense-in-depth HTTP security headers are correctly configured.",
+          "riskLevel": "None",
+          "explanation": "Security headers instruct the client browser how to handle content safely, neutralizing clickjacking, MIME confusion, and cross-site scripting (XSS).",
+          "recommendedSolution": "Regularly review your Content Security Policy (CSP) directives to prevent script injection.",
+          "technicalDetails": {
+            "presentHeaders": [
+              "Strict-Transport-Security",
+              "Content-Security-Policy",
+              "X-Frame-Options",
+              "X-Content-Type-Options",
+              "Referrer-Policy",
+              "Permissions-Policy"
+            ],
+            "missingHeaders": [],
+            "rawHeaders": {
+              "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https://remssssfmrgmyzqnpeas.supabase.co https://*.supabase.co https://owasp.org https://dependencytrack.org https://assets.ot.digital https://images.unsplash.com https://i.ytimg.com https://img.youtube.com data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://remssssfmrgmyzqnpeas.supabase.co wss://remssssfmrgmyzqnpeas.supabase.co; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://calendar.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp-endpoint",
+              "server": "Vercel",
+              "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+              "x-content-type-options": "nosniff",
+              "x-frame-options": "DENY",
+              "x-powered-by": "Next.js"
+            }
+          }
+        },
+        {
+          "area": "Cookie Security",
+          "status": "ISSUE",
+          "problem": "1 cookie(s) missing the 'Secure' attribute.",
+          "riskLevel": "High",
+          "explanation": "Cookies without the Secure flag can be transmitted over unencrypted HTTP connections if a user visits an insecure link, allowing session hijacking.",
+          "recommendedSolution": "Always set the \"Secure\" flag on cookies so browsers only transmit them over HTTPS.",
+          "technicalDetails": {
+            "cookiesFound": 1,
+            "cookieDetails": [
+              {
+                "name": "owasp-locale",
+                "hasSecure": false,
+                "hasHttpOnly": false,
+                "hasSameSite": true
+              }
+            ]
+          }
+        },
+        {
+          "area": "Authentication",
+          "status": "WARNING",
+          "problem": "Server leaks technology stack via X-Powered-By: \"Next.js\"",
+          "riskLevel": "Medium",
+          "explanation": "Information disclosure in HTTP headers provides passive fingerprinting intelligence to automated scanners and attackers.",
+          "recommendedSolution": "Remove or sanitize banner headers in reverse proxy / application settings.",
+          "technicalDetails": {
+            "serverBanner": "Vercel",
+            "poweredBy": "Next.js",
+            "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+            "corsOrigin": "Restricted"
+          }
+        },
+        {
+          "area": "Input Validation",
+          "status": "PASS",
+          "problem": "Input fields and form actions implement standard client-side validation attributes and secure transmission methods.",
+          "riskLevel": "None",
+          "explanation": "No direct HTML input forms were detected on the inspected landing page. URL query parameters are processed cleanly without unescaped reflection.",
+          "recommendedSolution": "Always combine client-side validation with strict server-side schema verification and sanitization.",
+          "technicalDetails": {
+            "formsAnalyzed": 0,
+            "insecureFormAction": false,
+            "passwordOverGet": false,
+            "unconstrainedFormFound": false,
+            "missingCsrfIndicator": false
+          }
+        }
+      ],
+      "weakAreas": [
+        "Cookie Security",
+        "Authentication"
+      ],
+      "summaryText": "WEB SECURITY REPORT\n\nSecurity Score: 73/100\nOverall Risk: MEDIUM\n\nHTTPS              ✅ PASS\nSecurity Headers   ✅ PASS\nCookie Security    ❌ ISSUE\nAuthentication     ⚠️ WARNING\nInput Validation   ✅ PASS\n\nWeak Areas:\n• Cookie Security\n• Authentication",
+      "metadata": {
+        "durationMs": 647,
+        "statusCode": 200,
+        "contentType": "text/html; charset=utf-8",
+        "finalUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com"
+      }
+    },
+    {
+      "_id": "scan_1789839081785_blz7vcu",
+      "id": "scan_1789839081785_blz7vcu",
+      "userId": "usr_1789838989257_o1ys976",
+      "userEmail": "alekhya@gmail.com",
+      "targetUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+      "scanDate": "2026-09-19T17:31:21.777Z",
+      "score": 73,
+      "overallRisk": "MEDIUM",
+      "findings": [
+        {
+          "area": "HTTPS",
+          "status": "PASS",
+          "problem": "HTTPS encryption is active and standard TLS transport security is verified.",
+          "riskLevel": "None",
+          "explanation": "The target website successfully serves content over an encrypted TLS/HTTPS connection, safeguarding sensitive data in transit from eavesdropping.",
+          "recommendedSolution": "Maintain current valid SSL/TLS certificates and renew ahead of expiration.",
+          "technicalDetails": {
+            "url": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com",
+            "isHttps": true,
+            "httpRedirectsToHttps": true,
+            "statusCode": 200
+          }
+        },
+        {
+          "area": "Security Headers",
+          "status": "PASS",
+          "problem": "All essential defense-in-depth HTTP security headers are correctly configured.",
+          "riskLevel": "None",
+          "explanation": "Security headers instruct the client browser how to handle content safely, neutralizing clickjacking, MIME confusion, and cross-site scripting (XSS).",
+          "recommendedSolution": "Regularly review your Content Security Policy (CSP) directives to prevent script injection.",
+          "technicalDetails": {
+            "presentHeaders": [
+              "Strict-Transport-Security",
+              "Content-Security-Policy",
+              "X-Frame-Options",
+              "X-Content-Type-Options",
+              "Referrer-Policy",
+              "Permissions-Policy"
+            ],
+            "missingHeaders": [],
+            "rawHeaders": {
+              "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https://remssssfmrgmyzqnpeas.supabase.co https://*.supabase.co https://owasp.org https://dependencytrack.org https://assets.ot.digital https://images.unsplash.com https://i.ytimg.com https://img.youtube.com data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://remssssfmrgmyzqnpeas.supabase.co wss://remssssfmrgmyzqnpeas.supabase.co; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://calendar.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; report-uri /api/csp-report; report-to csp-endpoint",
+              "server": "Vercel",
+              "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+              "x-content-type-options": "nosniff",
+              "x-frame-options": "DENY",
+              "x-powered-by": "Next.js"
+            }
+          }
+        },
+        {
+          "area": "Cookie Security",
+          "status": "ISSUE",
+          "problem": "1 cookie(s) missing the 'Secure' attribute.",
+          "riskLevel": "High",
+          "explanation": "Cookies without the Secure flag can be transmitted over unencrypted HTTP connections if a user visits an insecure link, allowing session hijacking.",
+          "recommendedSolution": "Always set the \"Secure\" flag on cookies so browsers only transmit them over HTTPS.",
+          "technicalDetails": {
+            "cookiesFound": 1,
+            "cookieDetails": [
+              {
+                "name": "owasp-locale",
+                "hasSecure": false,
+                "hasHttpOnly": false,
+                "hasSameSite": true
+              }
+            ]
+          }
+        },
+        {
+          "area": "Authentication",
+          "status": "WARNING",
+          "problem": "Server leaks technology stack via X-Powered-By: \"Next.js\"",
+          "riskLevel": "Medium",
+          "explanation": "Information disclosure in HTTP headers provides passive fingerprinting intelligence to automated scanners and attackers.",
+          "recommendedSolution": "Remove or sanitize banner headers in reverse proxy / application settings.",
+          "technicalDetails": {
+            "serverBanner": "Vercel",
+            "poweredBy": "Next.js",
+            "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+            "corsOrigin": "Restricted"
+          }
+        },
+        {
+          "area": "Input Validation",
+          "status": "PASS",
+          "problem": "Input fields and form actions implement standard client-side validation attributes and secure transmission methods.",
+          "riskLevel": "None",
+          "explanation": "No direct HTML input forms were detected on the inspected landing page. URL query parameters are processed cleanly without unescaped reflection.",
+          "recommendedSolution": "Always combine client-side validation with strict server-side schema verification and sanitization.",
+          "technicalDetails": {
+            "formsAnalyzed": 0,
+            "insecureFormAction": false,
+            "passwordOverGet": false,
+            "unconstrainedFormFound": false,
+            "missingCsrfIndicator": false
+          }
+        }
+      ],
+      "weakAreas": [
+        "Cookie Security",
+        "Authentication"
+      ],
+      "summaryText": "WEB SECURITY REPORT\n\nSecurity Score: 73/100\nOverall Risk: MEDIUM\n\nHTTPS              ✅ PASS\nSecurity Headers   ✅ PASS\nCookie Security    ❌ ISSUE\nAuthentication     ⚠️ WARNING\nInput Validation   ✅ PASS\n\nWeak Areas:\n• Cookie Security\n• Authentication",
+      "metadata": {
+        "durationMs": 1132,
+        "statusCode": 200,
+        "contentType": "text/html; charset=utf-8",
+        "finalUrl": "https://owasp.org/projects/juice-shop?utm_source=chatgpt.com"
+      }
+    },
+    {
+      "_id": "scan_1789803727315_qr3ziry",
+      "id": "scan_1789803727315_qr3ziry",
+      "userId": "usr_1789803719763_dtey8nk",
+      "userEmail": "student.auditor@webshield.edu",
+      "targetUrl": "https://example.com",
+      "scanDate": "2026-09-19T07:42:07.315Z",
+      "score": 65,
+      "overallRisk": "MEDIUM",
+      "findings": [
+        {
+          "area": "HTTPS",
+          "status": "WARNING",
+          "problem": "HTTPS is supported, but plain HTTP requests do not automatically upgrade to HTTPS.",
+          "riskLevel": "Medium",
+          "explanation": "Users navigating directly to http://example.com may browse without encryption if an automatic 301 redirect is not enforced by the web server.",
+          "recommendedSolution": "Configure your web server (Nginx, Apache, Cloudflare) with a permanent 301 redirect from HTTP to HTTPS.",
+          "technicalDetails": {
+            "url": "https://example.com",
+            "isHttps": true,
+            "httpRedirectsToHttps": false,
+            "statusCode": 200
+          }
+        },
+        {
+          "area": "Security Headers",
+          "status": "ISSUE",
+          "problem": "Missing critical security headers: Strict-Transport-Security, Content-Security-Policy, X-Frame-Options.",
+          "riskLevel": "High",
+          "explanation": "Without critical headers like Content-Security-Policy, HSTS, and X-Frame-Options, modern browser-level safeguards remain inactive, significantly elevating risk of Clickjacking and XSS.",
+          "recommendedSolution": "Add Strict-Transport-Security, Content-Security-Policy, and X-Frame-Options: SAMEORIGIN in your server or proxy headers.",
+          "technicalDetails": {
+            "presentHeaders": [],
+            "missingHeaders": [
+              "Strict-Transport-Security",
+              "Content-Security-Policy",
+              "X-Frame-Options",
+              "X-Content-Type-Options",
+              "Referrer-Policy",
+              "Permissions-Policy"
+            ],
+            "rawHeaders": {
+              "server": "cloudflare"
+            }
+          }
+        },
+        {
+          "area": "Cookie Security",
+          "status": "PASS",
+          "problem": "Cookies implement recommended Secure, HttpOnly, and SameSite protection flags.",
+          "riskLevel": "None",
+          "explanation": "No Set-Cookie headers were returned during initial inspection. When authentication cookies are issued, ensure Secure, HttpOnly, and SameSite flags are enabled.",
+          "recommendedSolution": "Continue to enforce HttpOnly, Secure, and SameSite=Lax/Strict on all session cookies.",
+          "technicalDetails": {
+            "cookiesFound": 0,
+            "cookieDetails": []
+          }
+        },
+        {
+          "area": "Authentication",
+          "status": "PASS",
+          "problem": "Basic authentication and server configuration indicators follow secure standards.",
+          "riskLevel": "None",
+          "explanation": "Server banners are hidden or masked, avoiding sensitive framework/version disclosure, and CORS configurations maintain safe boundaries.",
+          "recommendedSolution": "Keep dependencies updated and ensure sensitive admin endpoints require multifactor authentication and session timeouts.",
+          "technicalDetails": {
+            "serverBanner": "cloudflare",
+            "poweredBy": "Not disclosed (secure)",
+            "cacheControl": "Default",
+            "corsOrigin": "Restricted"
+          }
+        },
+        {
+          "area": "Input Validation",
+          "status": "PASS",
+          "problem": "Input fields and form actions implement standard client-side validation attributes and secure transmission methods.",
+          "riskLevel": "None",
+          "explanation": "No direct HTML input forms were detected on the inspected landing page. URL query parameters are processed cleanly without unescaped reflection.",
+          "recommendedSolution": "Always combine client-side validation with strict server-side schema verification and sanitization.",
+          "technicalDetails": {
+            "formsAnalyzed": 0,
+            "insecureFormAction": false,
+            "passwordOverGet": false,
+            "unconstrainedFormFound": false,
+            "missingCsrfIndicator": false
+          }
+        }
+      ],
+      "weakAreas": [
+        "HTTPS",
+        "Security Headers"
+      ],
+      "summaryText": "WEB SECURITY REPORT\n\nSecurity Score: 65/100\nOverall Risk: MEDIUM\n\nHTTPS              ⚠️ WARNING\nSecurity Headers   ❌ ISSUE\nCookie Security    ✅ PASS\nAuthentication     ✅ PASS\nInput Validation   ✅ PASS\n\nWeak Areas:\n• HTTPS\n• Security Headers",
+      "metadata": {
+        "durationMs": 107,
+        "statusCode": 200,
+        "contentType": "text/html",
+        "finalUrl": "https://example.com"
+      }
+    },
+    {
+      "_id": "scan_1789803719764_g5d50pe",
+      "id": "scan_1789803719764_g5d50pe",
+      "userId": "usr_1789803719763_dtey8nk",
+      "userEmail": "student.auditor@webshield.edu",
+      "targetUrl": "https://test-banking-portal.internal.demo",
+      "scanDate": "2026-09-19T05:41:59.764Z",
+      "score": 75,
+      "overallRisk": "MEDIUM",
+      "findings": [
+        {
+          "area": "HTTPS",
+          "status": "PASS",
+          "problem": "HTTPS encryption is active and TLS certificate is valid.",
+          "riskLevel": "None",
+          "explanation": "The website encrypts traffic in transit using TLS 1.3, ensuring confidentiality and integrity.",
+          "recommendedSolution": "Ensure automated SSL certificate renewal is in place.",
+          "technicalDetails": {
+            "isHttps": true,
+            "httpRedirectsToHttps": true,
+            "statusCode": 200
+          }
+        },
+        {
+          "area": "Security Headers",
+          "status": "WARNING",
+          "problem": "A recommended security header is missing: Content-Security-Policy, Permissions-Policy.",
+          "riskLevel": "Medium",
+          "explanation": "Without Content-Security-Policy (CSP), malicious scripts injected via Cross-Site Scripting (XSS) can execute unrestrained.",
+          "recommendedSolution": "Configure Content-Security-Policy and Strict-Transport-Security in web server headers.",
+          "technicalDetails": {
+            "presentHeaders": [
+              "Strict-Transport-Security",
+              "X-Frame-Options",
+              "X-Content-Type-Options"
+            ],
+            "missingHeaders": [
+              "Content-Security-Policy",
+              "Permissions-Policy"
+            ]
+          }
+        },
+        {
+          "area": "Cookie Security",
+          "status": "PASS",
+          "problem": "Session cookies implement Secure, HttpOnly, and SameSite=Lax flags.",
+          "riskLevel": "None",
+          "explanation": "Cookies cannot be accessed via JavaScript document.cookie and are prevented from CSRF submission.",
+          "recommendedSolution": "Maintain strict cookie policy across all subdomains.",
+          "technicalDetails": {
+            "cookiesFound": 2
+          }
+        },
+        {
+          "area": "Authentication",
+          "status": "WARNING",
+          "problem": "Server discloses framework runtime via X-Powered-By: \"Express\".",
+          "riskLevel": "Medium",
+          "explanation": "Technology banner disclosures give reconnaissance advantages to attackers scanning for framework-specific zero-days.",
+          "recommendedSolution": "Configure app.disable(\"x-powered-by\") in Express to suppress tech fingerprinting.",
+          "technicalDetails": {
+            "poweredBy": "Express",
+            "serverBanner": "nginx/1.18.0"
+          }
+        },
+        {
+          "area": "Input Validation",
+          "status": "ISSUE",
+          "problem": "Login forms detected with unconstrained input fields and absent anti-CSRF token.",
+          "riskLevel": "High",
+          "explanation": "Input fields do not declare HTML5 validation constraints, and the form submission does not include a synchronized anti-CSRF token.",
+          "recommendedSolution": "Add input length/pattern validation and implement cryptographically random anti-CSRF tokens.",
+          "technicalDetails": {
+            "formsAnalyzed": 1,
+            "unconstrainedFormFound": true,
+            "missingCsrfIndicator": true
+          }
+        }
+      ],
+      "weakAreas": [
+        "Security Headers",
+        "Authentication",
+        "Input Validation"
+      ],
+      "summaryText": "WEB SECURITY REPORT\n\nSecurity Score: 75/100\nOverall Risk: MEDIUM\n\nHTTPS              ✅ PASS\nSecurity Headers   ⚠️ WARNING\nCookie Security    ✅ PASS\nAuthentication     ⚠️ WARNING\nInput Validation   ❌ ISSUE\n\nWeak Areas:\n• Security Headers\n• Authentication\n• Input Validation",
+      "metadata": {
+        "durationMs": 432,
+        "statusCode": 200,
+        "contentType": "text/html"
+      }
+    }
+  ]
+}

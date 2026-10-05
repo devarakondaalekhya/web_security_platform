@@ -1,0 +1,6 @@
+{
+  "name": "WebShield – Web Security Testing Platform",
+  "description": "A web application that checks authorized websites for basic security weaknesses and displays the results in a cybersecurity dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
